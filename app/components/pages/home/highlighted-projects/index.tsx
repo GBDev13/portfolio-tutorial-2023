@@ -38,13 +38,13 @@ export const HighlightedProjects = () => {
 
       <div>
         {PROJECTS.map((project) => (
-          <>
-            <ProjectCard key={project.slug} project={project} />
+          <div key={project.slug}>
+            <ProjectCard project={project} />
             <HorizontalDivider className="my-16" />
-          </>
+          </div>
         ))}
         <p>
-          <span className="text-gray-400">Se interessou? </span>
+          <span className="text-gray-400">Se interessou?</span>
           <Link href="/projects" className="inline-flex">
             Ver todos
             <HiArrowNarrowRight />
