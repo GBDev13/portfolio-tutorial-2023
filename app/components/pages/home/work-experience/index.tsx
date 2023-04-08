@@ -5,6 +5,7 @@ const EXPERIENCES = [
   {
     company: 'Workwolf',
     companyLogo: 'https://media.graphassets.com/Q4lS2mPkT4Kw3BHM6Ba5',
+    companyLink: 'https://www.linkedin.com/company/workwolf',
     role: 'Desenvolvedor Front-End',
     startDate: '2022-10-20',
     description:
@@ -22,6 +23,7 @@ const EXPERIENCES = [
   {
     company: 'Cidade Alta',
     companyLogo: 'https://media.graphassets.com/HaecH32uSOi4y1MpanTB',
+    companyLink: 'https://www.linkedin.com/company/workwolf',
     role: 'Desenvolvedor Front-End',
     startDate: '2021-01-07',
     description:

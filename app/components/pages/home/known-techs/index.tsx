@@ -1,3 +1,5 @@
+'use client'
+
 import { SectionTitle } from '@/app/components/section-title'
 import {
   TbBrandCss3,
@@ -10,6 +12,7 @@ import {
 } from 'react-icons/tb'
 import { SiNodedotjs } from 'react-icons/si'
 import { KnownTech } from './known-tech'
+import { motion } from 'framer-motion'
 
 const TECHS = [
   {
@@ -59,8 +62,16 @@ export const KnownTechs = () => {
     <section className="container py-16">
       <SectionTitle subtitle="competências" title="Conhecimentos" />
       <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(264px,1fr))] gap-3 mt-[60px]">
-        {TECHS.map((tech) => (
-          <KnownTech key={tech.tech} tech={tech} />
+        {TECHS.map((tech, i) => (
+          <motion.div
+            key={tech.tech}
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.15, delay: i * 0.1 }}
+          >
+            <KnownTech tech={tech} />
+          </motion.div>
         ))}
       </div>
     </section>

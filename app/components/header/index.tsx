@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { NavItem } from './nav-item'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 const NAV_ITEMS = [
   {
@@ -17,7 +18,12 @@ const NAV_ITEMS = [
 
 export const Header = () => {
   return (
-    <header className="absolute top-0 h-24 w-full flex items-center justify-center">
+    <motion.header
+      className="absolute top-0 h-24 w-full flex items-center justify-center"
+      initial={{ top: -100 }}
+      animate={{ top: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container flex items-center justify-between">
         <Link href="/">
           <Image
@@ -34,6 +40,6 @@ export const Header = () => {
           ))}
         </nav>
       </div>
-    </header>
+    </motion.header>
   )
 }
