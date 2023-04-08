@@ -5,15 +5,10 @@ import { TechBadge } from '@/app/components/tech-badge'
 import Image from 'next/image'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { motion } from 'framer-motion'
+import { Project } from '@/app/types/projects'
 
 type ProjectCardProps = {
-  project: {
-    title: string
-    description: string
-    techs: string[]
-    thumbnail: string
-    slug: string
-  }
+  project: Project
 }
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
@@ -39,7 +34,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
         transition={{ duration: 0.3, delay: 0.3 }}
       >
         <Image
-          src={project.thumbnail}
+          src={project.thumbnail.url}
           width={420}
           height={304}
           alt={`Thumbnail do projeto ${project.title}`}
@@ -67,19 +62,19 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           {...animProps}
           transition={{ duration: 0.2, delay: 0.3 }}
         >
-          {project.description}
+          {project.shortDescription}
         </motion.p>
 
         <div className="flex gap-x-2 gap-y-3 flex-wrap lg:max-w-[350px] mb-8">
-          {project.techs.map((tech, i) => (
+          {project.technologies.map((tech, i) => (
             <motion.div
-              key={`${project.title}-tech-${tech}`}
+              key={`${project.title}-tech-${tech.name}`}
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ duration: 0.2, delay: 0.5 + i * 0.1 }}
             >
-              <TechBadge name={tech} />
+              <TechBadge name={tech.name} />
             </motion.div>
           ))}
         </div>

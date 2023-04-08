@@ -1,67 +1,50 @@
 import { ProjectDetails } from '@/app/components/pages/project/project-details'
 import { ProjectSections } from '@/app/components/pages/project/project-sections'
-import {
-  TbBrandGithub,
-  TbBrandLinkedin,
-  TbBrandYoutube,
-  TbBrandWhatsapp,
-} from 'react-icons/tb'
+import { ProjectPageData } from '@/app/types/page-info'
+import { fetchHygraphQuery } from '@/app/utils/fetch-hygraph-query'
 
-const project = {
-  title: 'BookWise',
-  description:
-    'BookWise é uma plataforma de avaliação de livros que foi desenvolvida durante o bootcamp Ignite da Rocketseat. Com apenas um Figma precisavamos desenvolver essa aplicação completa Full Stack com Next.js.',
-  techs: [
-    'Next.js',
-    'Next Auth',
-    'Stiches',
-    'Radix',
-    'TypeScript',
-    'Prisma',
-    'React Query',
-  ],
-  pageThumbnail: 'https://media.graphassets.com/7Kic5YHkQcmGrN57MSXw',
-  sections: [
-    {
-      title: 'Login',
-      image: 'https://media.graphassets.com/ZsK2GK0HTru6pi0WwEpc',
-    },
-    {
-      title: 'Início',
-      image: 'https://media.graphassets.com/7Kic5YHkQcmGrN57MSXw',
-    },
-  ],
+type ProjectProps = {
+  params: {
+    slug: string
+  }
 }
 
-const contacts = [
-  {
-    icon: <TbBrandGithub />,
-    url: 'https://github.com/GBDev13',
-  },
-  {
-    icon: <TbBrandLinkedin />,
-    url: 'https://www.linkedin.com/in/gbdesigns13/',
-  },
-  {
-    icon: <TbBrandYoutube />,
-    url: 'https://www.youtube.com/c/GBDev',
-  },
-  {
-    icon: <TbBrandWhatsapp />,
-    url: 'https://wa.me/5554999999999',
-  },
-]
+const getProjectDetails = async (slug: string): Promise<ProjectPageData> => {
+  const query = `
+  query ProjectQuery() {
+    project(where: {slug: "${slug}"}) {
+      pageThumbnail {
+        url
+      }
+      sections {
+        title
+        image {
+          url
+        }
+      }
+      title
+      shortDescription
+      description {
+        raw
+      }
+      technologies {
+        name
+      }
+    }
+    socials {
+      url
+      iconSvg
+    }
+  }
+    `
+  return fetchHygraphQuery(query)
+}
 
-export default function Project() {
+export default async function Project({ params: { slug } }: ProjectProps) {
+  const { project, socials } = await getProjectDetails(slug)
   return (
     <>
-      <ProjectDetails
-        title={project.title}
-        description={project.description}
-        techs={project.techs}
-        contacts={contacts}
-        thumbnail={project.pageThumbnail}
-      />
+      <ProjectDetails project={project} contacts={socials} />
       <ProjectSections sections={project.sections} />
     </>
   )

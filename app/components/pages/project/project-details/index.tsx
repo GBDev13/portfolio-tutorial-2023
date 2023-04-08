@@ -4,29 +4,20 @@ import { Button } from '@/app/components/button'
 import { Link } from '@/app/components/link'
 import { SectionTitle } from '@/app/components/section-title'
 import { TechBadge } from '@/app/components/tech-badge'
-import { ReactNode } from 'react'
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi'
 import NextLink from 'next/link'
 import { motion } from 'framer-motion'
+import { Project } from '@/app/types/projects'
+import { RichText } from '@/app/components/rich-text'
+import { Social } from '@/app/types/page-info'
+import { CMSIcon } from '@/app/components/cms-icon'
 
 type ProjectDetailsProps = {
-  title: string
-  description: string
-  techs: string[]
-  contacts: {
-    icon: ReactNode
-    url: string
-  }[]
-  thumbnail: string
+  project: Project
+  contacts: Social[]
 }
 
-export const ProjectDetails = ({
-  title,
-  description,
-  techs,
-  contacts,
-  thumbnail,
-}: ProjectDetailsProps) => {
+export const ProjectDetails = ({ project, contacts }: ProjectDetailsProps) => {
   const baseAnimProps = {
     initial: { opacity: 0, y: 50 },
     whileInView: { opacity: 1, y: 0 },
@@ -38,7 +29,7 @@ export const ProjectDetails = ({
       <motion.div
         className="absolute inset-0 z-[-1]"
         style={{
-          background: `url(/images/hero-bg.png) no-repeat center/cover, url(${thumbnail}) no-repeat center/cover`,
+          background: `url(/images/hero-bg.png) no-repeat center/cover, url(${project.pageThumbnail.url}) no-repeat center/cover`,
           backgroundSize: 'cover',
         }}
         initial={{ opacity: 0, scale: 1.3 }}
@@ -49,25 +40,25 @@ export const ProjectDetails = ({
 
       <SectionTitle
         subtitle="projetos"
-        title={title}
+        title={project.title}
         className="text-center items-center sm:[&>h3]:text-4xl"
       />
-      <motion.p
+      <motion.div
         className="text-gray-400 text-center max-w-[640px] my-4 sm:my-6 text-sm sm:text-base"
         {...baseAnimProps}
       >
-        {description}
-      </motion.p>
+        <RichText content={project.description.raw} />
+      </motion.div>
       <div className="w-full max-w-[330px] flex flex-wrap gap-2 items-center justify-center">
-        {techs.map((tech, i) => (
+        {project.technologies.map((tech, i) => (
           <motion.div
-            key={tech}
+            key={tech.name}
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3, delay: i * 0.1 }}
           >
-            <TechBadge name={tech} />
+            <TechBadge name={tech.name} />
           </motion.div>
         ))}
       </div>
@@ -91,7 +82,7 @@ export const ProjectDetails = ({
               className="hover:text-gray-100 transition-colors"
               rel="noreferrer"
             >
-              {contact.icon}
+              <CMSIcon icon={contact.iconSvg} />
             </a>
           ))}
         </div>

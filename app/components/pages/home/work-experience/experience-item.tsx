@@ -5,41 +5,35 @@ import { differenceInMonths, differenceInYears, format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { WorkExperience } from '@/app/types/work-experience'
+import { RichText } from '@/app/components/rich-text'
 
 type ExperienceItemProps = {
-  experience: {
-    company: string
-    companyLogo: string
-    companyLink: string
-    role: string
-    startDate: string
-    endDate?: string
-    description: string
-    techs: string[]
-  }
+  experience: WorkExperience
 }
 
 export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
   const {
     endDate,
-    company,
+    companyName,
     companyLogo,
-    companyLink,
+    companyUrl,
     description,
     role,
-    techs,
+    technologies,
   } = experience
 
   const startDate = new Date(experience.startDate)
-  const now = new Date()
 
   const formattedStartDate = format(startDate, 'MMM yyyy', { locale: ptBR })
   const formattedEndDate = endDate
     ? format(new Date(endDate), 'MMM yyyy', { locale: ptBR })
     : 'O momento'
 
-  const months = differenceInMonths(now, startDate)
-  const anos = differenceInYears(now, startDate)
+  const end = endDate ? new Date(endDate) : new Date()
+
+  const months = differenceInMonths(end, startDate)
+  const anos = differenceInYears(end, startDate)
   const monthsRemaining = months % 12
 
   const formattedDuration =
@@ -62,11 +56,11 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
       <div className="flex items-center flex-col gap-4">
         <div className="rounded-full border border-gray-500 p-0.5">
           <Image
-            src={companyLogo}
+            src={companyLogo.url}
             width={40}
             height={40}
             className="rounded-full"
-            alt={`Logo da empresa ${company}`}
+            alt={`Logo da empresa ${companyName}`}
           />
         </div>
 
@@ -76,34 +70,35 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
       <div>
         <div className="flex flex-col gap-2 text-sm sm:text-base">
           <a
-            href={companyLink}
+            href={companyUrl}
             target="_blank"
             className="text-gray-500 hover:text-emerald-500 transition-colors"
             rel="noreferrer"
           >
-            @ {company}
+            @ {companyName}
           </a>
           <h4 className="text-gray-300">{role}</h4>
           <span className="text-gray-500">
-            <span className="capitalize">{formattedStartDate}</span> •{' '}
-            {formattedEndDate} • ({formattedDuration})
+            {formattedStartDate} • {formattedEndDate} • ({formattedDuration})
           </span>
-          <p className="text-gray-400">{description}</p>
+          <div className="text-gray-400">
+            <RichText content={description.raw} />
+          </div>
         </div>
 
         <p className="text-gray-400 text-sm mb-3 mt-6 font-semibold">
           Competência
         </p>
         <div className="flex gap-x-2 gap-y-3 flex-wrap lg:max-w-[350px] mb-8">
-          {techs.map((tech, i) => (
+          {technologies.map((tech, i) => (
             <motion.div
-              key={`experience-${company}-tech-${tech}`}
+              key={`experience-${companyName}-tech-${tech.name}`}
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ duration: 0.2, delay: i * 0.1 }}
             >
-              <TechBadge name={tech} />
+              <TechBadge name={tech.name} />
             </motion.div>
           ))}
         </div>

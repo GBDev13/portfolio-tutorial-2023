@@ -2,12 +2,10 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { ProjectSection } from '@/app/types/projects'
 
 type ProjectSectionsProps = {
-  sections: {
-    title: string
-    image: string
-  }[]
+  sections: ProjectSection[]
 }
 
 export const ProjectSections = ({ sections }: ProjectSectionsProps) => {
@@ -30,8 +28,8 @@ export const ProjectSections = ({ sections }: ProjectSectionsProps) => {
             height={672}
             className="w-full aspect-auto rounded-lg object-cover"
             alt={`Imagem da sessão ${section.title}`}
-            src={section.image}
-            quality={100}
+            src={section.image.url}
+            unoptimized
           />
         </motion.div>
       ))}

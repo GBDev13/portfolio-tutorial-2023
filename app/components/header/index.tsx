@@ -19,7 +19,7 @@ const NAV_ITEMS = [
 export const Header = () => {
   return (
     <motion.header
-      className="absolute top-0 h-24 w-full flex items-center justify-center"
+      className="absolute top-0 z-10 h-24 w-full flex items-center justify-center"
       initial={{ top: -100 }}
       animate={{ top: 0 }}
       transition={{ duration: 0.5 }}

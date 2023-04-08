@@ -4,44 +4,16 @@ import { Button } from '@/app/components/button'
 import { TechBadge } from '@/app/components/tech-badge'
 import Image from 'next/image'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-import {
-  TbBrandGithub,
-  TbBrandLinkedin,
-  TbBrandYoutube,
-  TbBrandWhatsapp,
-} from 'react-icons/tb'
 import { motion } from 'framer-motion'
+import { HomePageInfo } from '@/app/types/page-info'
+import { CMSIcon } from '@/app/components/cms-icon'
+import { RichText } from '@/app/components/rich-text'
 
-const TECHS = [
-  'Next.js',
-  'Next Auth',
-  'Stiches',
-  'Radix',
-  'TypeScript',
-  'Prisma',
-  'React Query',
-]
+type HeroSectionProps = {
+  homeInfo: HomePageInfo
+}
 
-const CONTACTS = [
-  {
-    icon: <TbBrandGithub />,
-    url: 'https://github.com/GBDev13',
-  },
-  {
-    icon: <TbBrandLinkedin />,
-    url: 'https://www.linkedin.com/in/gbdesigns13/',
-  },
-  {
-    icon: <TbBrandYoutube />,
-    url: 'https://www.youtube.com/c/GBDev',
-  },
-  {
-    icon: <TbBrandWhatsapp />,
-    url: 'https://wa.me/5554999999999',
-  },
-]
-
-export const HeroSection = () => {
+export const HeroSection = ({ homeInfo }: HeroSectionProps) => {
   const handleContact = () => {
     const contactSection = document.querySelector('#contact')
     if (contactSection) {
@@ -61,24 +33,20 @@ export const HeroSection = () => {
           <p className="font-mono text-emerald-400">Olá, meu nome é</p>
           <h2 className="text-4xl font-medium mt-2">Gabriel Borges</h2>
 
-          <p className="text-gray-400 my-6 text-sm sm:text-base">
-            Olá, meu nome é Gabriel Borges e sou um desenvolvedor front-end
-            apaixonado por tecnologia. Com mais de 2 anos de experiência. Meu
-            objetivo é criar interfaces de usuário bonitas e funcionais, além de
-            liderar equipes técnicas em projetos desafiadores. Estou sempre
-            aberto a novas oportunidades e desafios.
-          </p>
+          <div className="text-gray-400 my-6 text-sm sm:text-base">
+            <RichText content={homeInfo.introduction.raw} />
+          </div>
 
           <div className="flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[340px]">
-            {TECHS.map((tech, i) => (
+            {homeInfo.technologies.map((tech, i) => (
               <motion.div
-                key={tech}
+                key={tech.name}
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0 }}
                 transition={{ duration: 0.2, delay: i * 0.1 }}
               >
-                <TechBadge name={tech} />
+                <TechBadge name={tech.name} />
               </motion.div>
             ))}
           </div>
@@ -93,7 +61,7 @@ export const HeroSection = () => {
             </div>
 
             <div className="text-2xl text-gray-600 flex items-center h-20 gap-3">
-              {CONTACTS.map((contact, i) => (
+              {homeInfo.socials.map((contact, i) => (
                 <a
                   href={contact.url}
                   key={`contact-${i}`}
@@ -101,7 +69,7 @@ export const HeroSection = () => {
                   className="hover:text-gray-100 transition-colors"
                   rel="noreferrer"
                 >
-                  {contact.icon}
+                  <CMSIcon icon={contact.iconSvg} />
                 </a>
               ))}
             </div>
@@ -119,7 +87,7 @@ export const HeroSection = () => {
             className="w-[300px] h-[300px] lg:w-[420px] lg:h-[404px] mb-6 lg:mb-0 shadow-2xl rounded-lg object-cover"
             width={420}
             height={404}
-            src="/images/profile-pic.png"
+            src={homeInfo.profilePicture.url}
             alt="Foto de perfil do Gabriel Borges"
           />
         </motion.div>
