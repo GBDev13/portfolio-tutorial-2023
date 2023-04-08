@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { NavItem } from './nav-item'
+import Link from 'next/link'
 
 const NAV_ITEMS = [
   {
@@ -16,14 +17,16 @@ const NAV_ITEMS = [
 
 export const Header = () => {
   return (
-    <header className="absolute top-0 h-[96px] w-full flex items-center justify-center">
+    <header className="absolute top-0 h-24 w-full flex items-center justify-center">
       <div className="container flex items-center justify-between">
-        <Image
-          width={58}
-          height={49}
-          src="/images/logo.svg"
-          alt="Logo GB Dev"
-        />
+        <Link href="/">
+          <Image
+            width={58}
+            height={49}
+            src="/images/logo.svg"
+            alt="Logo GB Dev"
+          />
+        </Link>
 
         <nav className="flex items-center gap-10">
           {NAV_ITEMS.map((item) => (
