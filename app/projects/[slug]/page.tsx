@@ -36,10 +36,8 @@ const getProjectDetails = async (slug: string): Promise<ProjectPageData> => {
       technologies {
         name
       }
-    }
-    socials {
-      url
-      iconSvg
+      liveProjectUrl
+      githubUrl
     }
   }
   `
@@ -50,13 +48,13 @@ const getProjectDetails = async (slug: string): Promise<ProjectPageData> => {
 }
 
 export default async function Project({ params: { slug } }: ProjectProps) {
-  const { project, socials } = await getProjectDetails(slug)
+  const { project } = await getProjectDetails(slug)
 
   if (!project?.title) return notFound()
 
   return (
     <>
-      <ProjectDetails project={project} contacts={socials} />
+      <ProjectDetails project={project} />
       <ProjectSections sections={project.sections} />
     </>
   )

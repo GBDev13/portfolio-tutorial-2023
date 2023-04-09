@@ -4,20 +4,18 @@ import { Button } from '@/app/components/button'
 import { Link } from '@/app/components/link'
 import { SectionTitle } from '@/app/components/section-title'
 import { TechBadge } from '@/app/components/tech-badge'
-import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi'
-import NextLink from 'next/link'
+import { HiArrowNarrowLeft } from 'react-icons/hi'
 import { motion } from 'framer-motion'
 import { Project } from '@/app/types/projects'
 import { RichText } from '@/app/components/rich-text'
-import { Social } from '@/app/types/page-info'
-import { CMSIcon } from '@/app/components/cms-icon'
+import { TbBrandGithub } from 'react-icons/tb'
+import { FiGlobe } from 'react-icons/fi'
 
 type ProjectDetailsProps = {
   project: Project
-  contacts: Social[]
 }
 
-export const ProjectDetails = ({ project, contacts }: ProjectDetailsProps) => {
+export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
   const baseAnimProps = {
     initial: { opacity: 0, y: 50 },
     whileInView: { opacity: 1, y: 0 },
@@ -66,26 +64,22 @@ export const ProjectDetails = ({ project, contacts }: ProjectDetailsProps) => {
         className="my-6 sm:my-12 flex items-center gap-2 sm:gap-4 flex-col sm:flex-row"
         {...baseAnimProps}
       >
-        <NextLink href="/#contact" target="_blank">
-          <Button>
-            Entre em contato
-            <HiArrowNarrowRight size={20} />
-          </Button>
-        </NextLink>
-
-        <div className="text-2xl text-gray-600 flex items-center h-20 gap-3">
-          {contacts.map((contact, i) => (
-            <a
-              href={contact.url}
-              key={`contact-${i}`}
-              target="_blank"
-              className="hover:text-gray-100 transition-colors"
-              rel="noreferrer"
-            >
-              <CMSIcon icon={contact.iconSvg} />
-            </a>
-          ))}
-        </div>
+        {project?.githubUrl && (
+          <a href={project.githubUrl} target="_blank" rel="noreferrer">
+            <Button className="min-w-[180px]">
+              <TbBrandGithub size={20} />
+              Repositório
+            </Button>
+          </a>
+        )}
+        {project?.liveProjectUrl && (
+          <a href={project.liveProjectUrl} target="_blank" rel="noreferrer">
+            <Button className="min-w-[180px]">
+              <FiGlobe size={20} />
+              Projeto Online
+            </Button>
+          </a>
+        )}
       </motion.div>
       <Link href="/projects">
         <HiArrowNarrowLeft size={20} />

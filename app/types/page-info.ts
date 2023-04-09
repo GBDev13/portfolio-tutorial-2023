@@ -22,7 +22,6 @@ export type HomePageInfo = {
 
 export type ProjectPageData = {
   project: Project
-  socials: Social[]
 }
 
 export type ProjectsPageData = {
