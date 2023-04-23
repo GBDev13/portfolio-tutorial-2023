@@ -28,7 +28,6 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
         className="absolute inset-0 z-[-1]"
         style={{
           background: `url(/images/hero-bg.png) no-repeat center/cover, url(${project.pageThumbnail.url}) no-repeat center/cover`,
-          backgroundSize: 'cover',
         }}
         initial={{ opacity: 0, scale: 1.3 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -49,15 +48,14 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
       </motion.div>
       <div className="w-full max-w-[330px] flex flex-wrap gap-2 items-center justify-center">
         {project.technologies.map((tech, i) => (
-          <motion.div
+          <TechBadge
+            name={tech.name}
             key={tech.name}
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3, delay: i * 0.1 }}
-          >
-            <TechBadge name={tech.name} />
-          </motion.div>
+          />
         ))}
       </div>
       <motion.div

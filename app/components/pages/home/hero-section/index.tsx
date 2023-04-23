@@ -39,26 +39,22 @@ export const HeroSection = ({ homeInfo }: HeroSectionProps) => {
 
           <div className="flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[340px]">
             {homeInfo.technologies.map((tech, i) => (
-              <motion.div
+              <TechBadge
+                name={tech.name}
                 key={tech.name}
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0 }}
                 transition={{ duration: 0.2, delay: i * 0.1 }}
-              >
-                <TechBadge name={tech.name} />
-              </motion.div>
+              />
             ))}
           </div>
 
           <div className="mt-6 lg:mt-10 flex sm:items-center sm:gap-5 flex-col sm:flex-row">
-            <div className="relative w-max">
-              <Button className="z-[2] relative" onClick={handleContact}>
-                Entre em contato
-                <HiArrowNarrowRight size={18} />
-              </Button>
-              <div className="absolute inset-0 bg-emerald-600 blur-2xl opacity-40" />
-            </div>
+            <Button className="w-max shadow-button" onClick={handleContact}>
+              Entre em contato
+              <HiArrowNarrowRight size={18} />
+            </Button>
 
             <div className="text-2xl text-gray-600 flex items-center h-20 gap-3">
               {homeInfo.socials.map((contact, i) => (

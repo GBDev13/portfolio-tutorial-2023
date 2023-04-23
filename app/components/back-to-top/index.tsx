@@ -12,8 +12,9 @@ export const BackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   const handleScroll = useCallback(() => {
-    window.scrollY > 500 ? setShow(true) : setShow(false)
-  }, [])
+    if (!show && window.scrollY > 500) setShow(true)
+    if (show && window.scrollY <= 500) setShow(false)
+  }, [show])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
