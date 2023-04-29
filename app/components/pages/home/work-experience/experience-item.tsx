@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { WorkExperience } from '@/app/types/work-experience'
 import { RichText } from '@/app/components/rich-text'
+import { fadeUpAnimation, techBadgeAnimation } from '@/app/lib/animations'
 
 type ExperienceItemProps = {
   experience: WorkExperience
@@ -48,9 +49,7 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
   return (
     <motion.div
       className="grid grid-cols-[40px,1fr] gap-4 md:gap-10"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 50 }}
+      {...fadeUpAnimation}
       transition={{ duration: 0.5 }}
     >
       <div className="flex items-center flex-col gap-4">
@@ -94,9 +93,7 @@ export const ExperienceItem = ({ experience }: ExperienceItemProps) => {
             <TechBadge
               name={tech.name}
               key={`experience-${companyName}-tech-${tech.name}`}
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
+              {...techBadgeAnimation}
               transition={{ duration: 0.2, delay: i * 0.1 }}
             />
           ))}

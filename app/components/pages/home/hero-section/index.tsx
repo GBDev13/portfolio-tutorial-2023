@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { HomePageInfo } from '@/app/types/page-info'
 import { CMSIcon } from '@/app/components/cms-icon'
 import { RichText } from '@/app/components/rich-text'
+import { techBadgeAnimation } from '@/app/lib/animations'
 
 type HeroSectionProps = {
   homeInfo: HomePageInfo
@@ -42,9 +43,7 @@ export const HeroSection = ({ homeInfo }: HeroSectionProps) => {
               <TechBadge
                 name={tech.name}
                 key={tech.name}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
+                {...techBadgeAnimation}
                 transition={{ duration: 0.2, delay: i * 0.1 }}
               />
             ))}

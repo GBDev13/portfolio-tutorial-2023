@@ -10,18 +10,13 @@ import { Project } from '@/app/types/projects'
 import { RichText } from '@/app/components/rich-text'
 import { TbBrandGithub } from 'react-icons/tb'
 import { FiGlobe } from 'react-icons/fi'
+import { fadeUpAnimation, techBadgeAnimation } from '@/app/lib/animations'
 
 type ProjectDetailsProps = {
   project: Project
 }
 
 export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
-  const baseAnimProps = {
-    initial: { opacity: 0, y: 50 },
-    whileInView: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 50 },
-    transition: { duration: 0.5 },
-  }
   return (
     <section className="w-full sm:min-h-[750px] flex flex-col items-center justify-end relative pb-10 sm:pb-24 py-24 px-6 overflow-hidden">
       <motion.div
@@ -31,7 +26,6 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
         }}
         initial={{ opacity: 0, scale: 1.3 }}
         animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 1.2 }}
         transition={{ duration: 0.5 }}
       />
 
@@ -42,7 +36,7 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
       />
       <motion.div
         className="text-gray-400 text-center max-w-[640px] my-4 sm:my-6 text-sm sm:text-base"
-        {...baseAnimProps}
+        {...fadeUpAnimation}
       >
         <RichText content={project.description.raw} />
       </motion.div>
@@ -51,16 +45,14 @@ export const ProjectDetails = ({ project }: ProjectDetailsProps) => {
           <TechBadge
             name={tech.name}
             key={tech.name}
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
+            {...techBadgeAnimation}
             transition={{ duration: 0.3, delay: i * 0.1 }}
           />
         ))}
       </div>
       <motion.div
         className="my-6 sm:my-12 flex items-center gap-2 sm:gap-4 flex-col sm:flex-row"
-        {...baseAnimProps}
+        {...fadeUpAnimation}
       >
         {project?.githubUrl && (
           <a href={project.githubUrl} target="_blank" rel="noreferrer">

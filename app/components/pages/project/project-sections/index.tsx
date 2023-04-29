@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ProjectSection } from '@/app/types/projects'
+import { fadeUpAnimation } from '@/app/lib/animations'
 
 type ProjectSectionsProps = {
   sections: ProjectSection[]
@@ -15,9 +16,7 @@ export const ProjectSections = ({ sections }: ProjectSectionsProps) => {
         <motion.div
           key={section.title}
           className="flex flex-col items-center gap-6 md:gap-12"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
+          {...fadeUpAnimation}
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-2xl md:text-3xl font-medium text-gray-300">

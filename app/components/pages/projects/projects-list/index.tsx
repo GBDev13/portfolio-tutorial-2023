@@ -4,6 +4,7 @@ import { Project } from '@/app/types/projects'
 import { ProjectCard } from './project-card'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { fadeUpAnimation } from '@/app/lib/animations'
 
 type ProjectsListProps = {
   projects: Project[]
@@ -15,9 +16,7 @@ export const ProjectsList = ({ projects }: ProjectsListProps) => {
       {projects.map((project, i) => (
         <motion.div
           key={i}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
+          {...fadeUpAnimation}
           transition={{ duration: 0.5, delay: i * 0.1 }}
         >
           <Link href={`/projects/${project.slug}`}>
