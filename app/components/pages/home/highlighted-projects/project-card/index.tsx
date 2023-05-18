@@ -22,7 +22,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="w-full h-full"
+        className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:min-h-full"
         initial={{ opacity: 0, y: 100, scale: 0.5 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 100, scale: 0.5 }}
@@ -33,11 +33,11 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           width={420}
           height={304}
           alt={`Thumbnail do projeto ${project.title}`}
-          className="w-full h-[200px] sm:h-[300px] lg:w-[420px] lg:min-h-full object-cover rounded-lg"
+          className="w-full h-full object-cover rounded-lg"
         />
       </motion.div>
 
-      <div className="lg:py-[18px]">
+      <div className="flex-1 lg:py-[18px]">
         <motion.h3
           className="flex items-center gap-3 font-medium text-lg text-gray-50"
           {...fadeUpAnimation}
